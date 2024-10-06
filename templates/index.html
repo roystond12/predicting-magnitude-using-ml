@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthquake Magnitude Prediction</title>
+    <style>
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+        .safety-tips {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Predict Earthquake Magnitude</h1>
+    <form action="/predict" method="POST">
+        <label for="depth">Depth (km):</label><br>
+        <input type="text" name="depth" required><br><br>
+
+        <label for="latitude">Latitude:</label><br>
+        <input type="text" name="latitude" required><br><br>
+
+        <label for="longitude">Longitude:</label><br>
+        <input type="text" name="longitude" required><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+
+        <!-- Add warning based on predicted magnitude -->
+        {% if prediction is defined %}
+            {% if prediction >= 6 %}
+            <div class="warning">
+                Warning: Severe earthquake predicted! Take immediate safety precautions.
+            </div>
+            {% elif prediction >= 4 %}
+            <div class="warning">
+                Caution: Moderate earthquake predicted. Damage to buildings and infrastructure is possible.
+            </div>
+            {% else %}
+            <div class="warning">
+                Minor or no damage expected. Stay alert.
+            </div>
+            {% endif %}
+
+            <!-- Earthquake safety tips -->
+            <div class="safety-tips">
+                <h3>Earthquake Safety Tips:</h3>
+                <ul>
+                    <li>Drop, Cover, and Hold On during shaking.</li>
+                    <li>Stay away from windows, glass, and heavy objects.</li>
+                    <li>If outdoors, move to an open area away from buildings and power lines.</li>
+                    <li>If driving, pull over to a safe spot and stop. Avoid overpasses and bridges.</li>
+                    <li>Be prepared for aftershocks.</li>
+                </ul>
+            </div>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
